@@ -1,4 +1,4 @@
-var canvas = document.getElementById("canvas");
+var canvas = <HTMLCanvasElement>document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var radius = canvas.height / 2;
 
@@ -27,13 +27,11 @@ function drawFace(ctx, radius) {
 }
 
 function drawNumbers(ctx, radius) {
-    var ang;
-    var num;
     ctx.font = radius*0.15 + "px arial";
     ctx.textBaseline="middle";
     ctx.textAlign="center";
 
-    stepEvery = 0
+    var stepEvery = 0;
 
     if (steps == 60) {
         stepEvery = 5
@@ -41,8 +39,8 @@ function drawNumbers(ctx, radius) {
         stepEvery = steps / 8
     }
 
-    for(num= 0; num < steps; num += stepEvery){
-        ang = num * Math.PI / (steps / 2);
+    for(var num= 0; num < steps; num += stepEvery){
+        var ang = num * Math.PI / (steps / 2);
         ctx.rotate(ang);
         ctx.translate(0, -radius*0.85);
         ctx.rotate(-ang);
@@ -55,7 +53,7 @@ function drawNumbers(ctx, radius) {
 
 function drawRandomAngle(ctx, radius){
 
-    second = Math.floor((Math.random() * steps))
+    var second = Math.floor((Math.random() * steps))
 
     console.log(second)
 
@@ -68,11 +66,11 @@ function drawTicks(ctx, radius) {
     var ang;
     var num;
 
-    length = radius * 0.9;
-    width = radius * 0.02;
+    var length = radius * 0.9;
+    var width = radius * 0.02;
 
     for(num= 1; num <= steps; num++){
-        pos = num * Math.PI/(steps/2)
+        var pos = num * Math.PI/(steps/2)
         ctx.beginPath();
         ctx.lineWidth = width;
         ctx.lineCap = "round";
