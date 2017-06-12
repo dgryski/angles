@@ -1,18 +1,9 @@
-var canvas = <HTMLCanvasElement>document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-var radius = canvas.height / 2;
 
-var steps = 32
-
-ctx.translate(radius, radius);
-radius = radius * 0.90
-drawClock(radius);
-
-function drawClock(radius) {
+function drawClock(ctx, steps, radius) {
   drawFace(ctx, radius);
-  drawNumbers(ctx, radius);
-  drawTicks(ctx, radius);
-  drawRandomAngle(ctx, radius);
+  drawNumbers(ctx, steps, radius);
+  drawTicks(ctx, steps, radius);
+  drawRandomAngle(ctx, steps, radius);
 }
 
 function drawFace(ctx, radius) {
@@ -24,7 +15,7 @@ function drawFace(ctx, radius) {
   ctx.fillStyle = '#333';
 }
 
-function drawNumbers(ctx, radius) {
+function drawNumbers(ctx, steps, radius) {
   ctx.font = radius * 0.15 + "px arial";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
@@ -49,7 +40,7 @@ function drawNumbers(ctx, radius) {
   }
 }
 
-function drawRandomAngle(ctx, radius) {
+function drawRandomAngle(ctx, steps, radius) {
 
   var second = Math.floor((Math.random() * steps))
 
@@ -60,7 +51,7 @@ function drawRandomAngle(ctx, radius) {
   drawHand(ctx, second, radius * 0.9, radius * 0.02);
 }
 
-function drawTicks(ctx, radius) {
+function drawTicks(ctx, steps, radius) {
   var ang;
   var num;
 
@@ -91,3 +82,16 @@ function drawHand(ctx, pos, length, width) {
   ctx.stroke();
   ctx.rotate(-pos);
 }
+
+function main() {
+
+  var canvas = <HTMLCanvasElement>document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  var radius = canvas.height / 2;
+  var steps = 32
+
+  ctx.translate(radius, radius);
+  drawClock(ctx, steps, radius * 0.90);
+}
+
+main()
