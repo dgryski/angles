@@ -50,7 +50,7 @@ function drawTicks(ctx: CanvasRenderingContext2D, steps: number, radius: number)
   var length = radius * 0.9;
   var width = radius * 0.02;
 
-  for (var num = 1; num <= steps; num++) {
+  for (var num = 0; num < steps; num++) {
     var pos = num * Math.PI / (steps / 2)
     ctx.beginPath();
     ctx.lineWidth = width;
