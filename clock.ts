@@ -1,12 +1,12 @@
 
-function drawClock(ctx, steps, radius) {
+function drawClock(ctx: CanvasRenderingContext2D, steps: number, radius: number) {
   drawFace(ctx, radius);
   drawNumbers(ctx, steps, radius);
   drawTicks(ctx, steps, radius);
   drawRandomAngle(ctx, steps, radius);
 }
 
-function drawFace(ctx, radius) {
+function drawFace(ctx: CanvasRenderingContext2D, radius: number) {
   ctx.beginPath();
   ctx.arc(0, 0, radius, 0, 2 * Math.PI);
   ctx.fillStyle = 'white';
@@ -15,7 +15,7 @@ function drawFace(ctx, radius) {
   ctx.fillStyle = '#333';
 }
 
-function drawNumbers(ctx, steps, radius) {
+function drawNumbers(ctx: CanvasRenderingContext2D, steps: number, radius: number) {
   ctx.font = radius * 0.15 + "px arial";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
@@ -40,13 +40,13 @@ function drawNumbers(ctx, steps, radius) {
   }
 }
 
-function drawRandomAngle(ctx, steps, radius) {
+function drawRandomAngle(ctx: CanvasRenderingContext2D, steps: number, radius: number) {
   var ang = Math.floor((Math.random() * steps))
   ang = (ang * Math.PI / (steps / 2))
   drawHand(ctx, ang, radius * 0.9, radius * 0.02);
 }
 
-function drawTicks(ctx, steps, radius) {
+function drawTicks(ctx: CanvasRenderingContext2D, steps: number, radius: number) {
   var length = radius * 0.9;
   var width = radius * 0.02;
 
@@ -64,7 +64,7 @@ function drawTicks(ctx, steps, radius) {
   }
 }
 
-function drawHand(ctx, pos, length, width) {
+function drawHand(ctx: CanvasRenderingContext2D, pos: number, length: number, width: number) {
   ctx.beginPath();
   ctx.lineWidth = width;
   ctx.lineCap = "round";
@@ -79,9 +79,15 @@ function drawHand(ctx, pos, length, width) {
 function main() {
 
   var canvas = <HTMLCanvasElement>document.getElementById("canvas");
+  if (canvas == null) {
+    return
+  }
   var ctx = canvas.getContext("2d");
+  if (ctx == null) {
+    return
+  }
   var radius = canvas.height / 2;
-  var steps = 32
+  var steps: number = 32
 
   ctx.translate(radius, radius);
   drawClock(ctx, steps, radius * 0.90);
