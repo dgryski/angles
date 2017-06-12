@@ -41,14 +41,9 @@ function drawNumbers(ctx, steps, radius) {
 }
 
 function drawRandomAngle(ctx, steps, radius) {
-
-  var second = Math.floor((Math.random() * steps))
-
-  console.log(second)
-
-  // second
-  second = (second * Math.PI / (steps / 2))
-  drawHand(ctx, second, radius * 0.9, radius * 0.02);
+  var ang = Math.floor((Math.random() * steps))
+  ang = (ang * Math.PI / (steps / 2))
+  drawHand(ctx, ang, radius * 0.9, radius * 0.02);
 }
 
 function drawTicks(ctx, steps, radius) {
