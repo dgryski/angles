@@ -47,13 +47,10 @@ function drawRandomAngle(ctx, steps, radius) {
 }
 
 function drawTicks(ctx, steps, radius) {
-  var ang;
-  var num;
-
   var length = radius * 0.9;
   var width = radius * 0.02;
 
-  for (num = 1; num <= steps; num++) {
+  for (var num = 1; num <= steps; num++) {
     var pos = num * Math.PI / (steps / 2)
     ctx.beginPath();
     ctx.lineWidth = width;
