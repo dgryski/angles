@@ -87,10 +87,13 @@ function main() {
     return
   }
   var radius = canvas.height / 2;
-  var steps: number = 32
+
+  var form = <HTMLFormElement>document.getElementById("stepsForm")
+  var steps = form.elements["steps"].value
 
   ctx.translate(radius, radius);
   drawClock(ctx, steps, radius * 0.90);
+  ctx.translate(-radius, -radius);
 }
 
 main()
