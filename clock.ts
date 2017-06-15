@@ -33,6 +33,20 @@ function drawNumbers(ctx: CanvasRenderingContext2D, steps: number, radius: numbe
   }
 }
 
+function drawLine(ctx: CanvasRenderingContext2D, pos: number, width: number, f: () => void) {
+  ctx.beginPath();
+
+  ctx.lineWidth = width;
+  ctx.lineCap = "round";
+  ctx.moveTo(0, 0);
+  ctx.rotate(pos);
+
+  f()
+
+  ctx.stroke();
+  ctx.rotate(-pos);
+}
+
 function drawRandomAngle(ctx: CanvasRenderingContext2D, steps: number, radius: number) {
   var ang = Math.floor((Math.random() * steps))
   ang = (ang * Math.PI / (steps / 2))
@@ -45,28 +59,19 @@ function drawTicks(ctx: CanvasRenderingContext2D, steps: number, radius: number)
 
   for (var num = 0; num < steps; num++) {
     var pos = num * Math.PI / (steps / 2)
-    ctx.beginPath();
-    ctx.lineWidth = width;
-    ctx.lineCap = "round";
-    ctx.moveTo(0, 0);
-    ctx.rotate(pos);
-    ctx.moveTo(0, length)
-    ctx.lineTo(0, radius)
-    ctx.stroke();
-    ctx.rotate(-pos);
+
+    drawLine(ctx, pos, width, () => {
+      ctx.moveTo(0, length)
+      ctx.lineTo(0, radius)
+    })
   }
 }
 
 function drawHand(ctx: CanvasRenderingContext2D, pos: number, length: number, width: number) {
-  ctx.beginPath();
-  ctx.lineWidth = width;
-  ctx.lineCap = "round";
-  ctx.moveTo(0, 0);
-  ctx.rotate(pos);
-  ctx.lineTo(0, length);
-  ctx.lineTo(0, -length)
-  ctx.stroke();
-  ctx.rotate(-pos);
+  drawLine(ctx, pos, width, () => {
+    ctx.lineTo(0, length);
+    ctx.lineTo(0, -length)
+  })
 }
 
 interface Environment {
