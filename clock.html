@@ -2,16 +2,21 @@
 <html>
 <body>
 
-<canvas id="canvas" width="400" height="400" style="background-color:#333"></canvas>
+<div>
+
+<canvas id="canvas" width="400" height="400" style="background-color:#333; display: block; margin: 0 auto"></canvas>
 
 <p>
 
-<button onclick="main()">next</button>
+<div>
+    <button onclick="next()">next</button>
+    <button onclick="show()">show</button>
 
-<form id="stepsForm">
-<input type="radio" name="steps" value="32" checked>32</input>
-<input type="radio" name="steps" value="60">60</input>
-</form>
+    <form id="stepsForm">
+    <input type="radio" name="steps" value="32" checked>32</input>
+    <input type="radio" name="steps" value="60">60</input>
+    </form>
+</div>
 
 <script src="clock.js"></script>
 

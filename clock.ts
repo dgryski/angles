@@ -1,11 +1,4 @@
 
-function drawClock(ctx: CanvasRenderingContext2D, steps: number, radius: number) {
-  drawFace(ctx, radius);
-  drawNumbers(ctx, steps, radius);
-  drawTicks(ctx, steps, radius);
-  drawRandomAngle(ctx, steps, radius);
-}
-
 function drawFace(ctx: CanvasRenderingContext2D, radius: number) {
   ctx.beginPath();
   ctx.arc(0, 0, radius, 0, 2 * Math.PI);
@@ -76,7 +69,27 @@ function drawHand(ctx: CanvasRenderingContext2D, pos: number, length: number, wi
   ctx.rotate(-pos);
 }
 
-function main() {
+function show() {
+  var canvas = <HTMLCanvasElement>document.getElementById("canvas");
+  if (canvas == null) {
+    return
+  }
+  var ctx = canvas.getContext("2d");
+  if (ctx == null) {
+    return
+  }
+  var radius = canvas.height / 2;
+
+  var form = <HTMLFormElement>document.getElementById("stepsForm")
+  var steps = form.elements["steps"].value
+
+  ctx.translate(radius, radius);
+  drawNumbers(ctx, steps, radius * 0.9);
+  drawTicks(ctx, steps, radius * 0.9);
+  ctx.translate(-radius, -radius);
+}
+
+function next() {
 
   var canvas = <HTMLCanvasElement>document.getElementById("canvas");
   if (canvas == null) {
@@ -92,8 +105,9 @@ function main() {
   var steps = form.elements["steps"].value
 
   ctx.translate(radius, radius);
-  drawClock(ctx, steps, radius * 0.90);
+  drawFace(ctx, radius * 0.9);
+  drawRandomAngle(ctx, steps, radius * 0.9);
   ctx.translate(-radius, -radius);
 }
 
-main()
+next()
