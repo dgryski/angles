@@ -69,7 +69,14 @@ function drawHand(ctx: CanvasRenderingContext2D, pos: number, length: number, wi
   ctx.rotate(-pos);
 }
 
-function show() {
+interface Environment {
+  ctx: CanvasRenderingContext2D;
+  steps: number;
+  radius: number;
+}
+
+function getEnvironment(): Environment {
+
   var canvas = <HTMLCanvasElement>document.getElementById("canvas");
   if (canvas == null) {
     return
@@ -83,31 +90,33 @@ function show() {
   var form = <HTMLFormElement>document.getElementById("stepsForm")
   var steps = form.elements["steps"].value
 
-  ctx.translate(radius, radius);
-  drawNumbers(ctx, steps, radius * 0.9);
-  drawTicks(ctx, steps, radius * 0.9);
-  ctx.translate(-radius, -radius);
+  return {
+    ctx: ctx,
+    radius: radius,
+    steps: steps,
+  }
+}
+
+function show() {
+  var env = getEnvironment()
+
+  env.ctx.translate(env.radius, env.radius);
+
+  drawNumbers(env.ctx, env.steps, env.radius * 0.9);
+  drawTicks(env.ctx, env.steps, env.radius * 0.9);
+
+  env.ctx.translate(-env.radius, -env.radius);
 }
 
 function next() {
+  var env = getEnvironment()
 
-  var canvas = <HTMLCanvasElement>document.getElementById("canvas");
-  if (canvas == null) {
-    return
-  }
-  var ctx = canvas.getContext("2d");
-  if (ctx == null) {
-    return
-  }
-  var radius = canvas.height / 2;
+  env.ctx.translate(env.radius, env.radius);
 
-  var form = <HTMLFormElement>document.getElementById("stepsForm")
-  var steps = form.elements["steps"].value
+  drawFace(env.ctx, env.radius * 0.9);
+  drawRandomAngle(env.ctx, env.steps, env.radius * 0.9);
 
-  ctx.translate(radius, radius);
-  drawFace(ctx, radius * 0.9);
-  drawRandomAngle(ctx, steps, radius * 0.9);
-  ctx.translate(-radius, -radius);
+  env.ctx.translate(-env.radius, -env.radius);
 }
 
 next()
