@@ -78,9 +78,23 @@ interface Environment {
   ctx: CanvasRenderingContext2D;
   steps: number;
   radius: number;
+  hasTicks: boolean;
 }
 
+var env: Environment = null;
+
 function getEnvironment(): Environment {
+
+  var form = <HTMLFormElement>document.getElementById("stepsForm")
+  var steps = form.elements["steps"].value
+
+  if (env != null) {
+    if (env.steps != steps) {
+      env.hasTicks = null
+    }
+    env.steps = steps
+    return env
+  }
 
   var canvas = <HTMLCanvasElement>document.getElementById("canvas");
   if (canvas == null) {
@@ -92,25 +106,14 @@ function getEnvironment(): Environment {
   }
   var radius = canvas.height / 2;
 
-  var form = <HTMLFormElement>document.getElementById("stepsForm")
-  var steps = form.elements["steps"].value
-
-  return {
+  env = {
     ctx: ctx,
     radius: radius,
     steps: steps,
+    hasTicks: null,
   }
-}
 
-function show() {
-  var env = getEnvironment()
-
-  env.ctx.translate(env.radius, env.radius);
-
-  drawNumbers(env.ctx, env.steps, env.radius * 0.9);
-  drawTicks(env.ctx, env.steps, env.radius * 0.9);
-
-  env.ctx.translate(-env.radius, -env.radius);
+  return env
 }
 
 function next() {
@@ -118,8 +121,15 @@ function next() {
 
   env.ctx.translate(env.radius, env.radius);
 
-  drawFace(env.ctx, env.radius * 0.9);
-  drawRandomAngle(env.ctx, env.steps, env.radius * 0.9);
+  if (env.hasTicks == null || env.hasTicks) {
+    drawFace(env.ctx, env.radius * 0.9);
+    drawRandomAngle(env.ctx, env.steps, env.radius * 0.9);
+    env.hasTicks = false
+  } else {
+    drawNumbers(env.ctx, env.steps, env.radius * 0.9);
+    drawTicks(env.ctx, env.steps, env.radius * 0.9);
+    env.hasTicks = true
+  }
 
   env.ctx.translate(-env.radius, -env.radius);
 }
